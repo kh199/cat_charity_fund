@@ -1,6 +1,11 @@
+import logging
 from typing import Optional
 
 from pydantic import BaseSettings, EmailStr
+
+logging.basicConfig(
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    level=logging.INFO)
 
 
 class Settings(BaseSettings):

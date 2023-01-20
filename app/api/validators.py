@@ -45,9 +45,8 @@ async def check_project_is_closed(
     return project
 
 
-async def check_project_before_deletion(
+def check_project_before_deletion(
         project: CharityProject,
-        session: AsyncSession,
 ) -> None:
     if project.invested_amount > 0:
         raise HTTPException(
@@ -56,10 +55,9 @@ async def check_project_before_deletion(
         )
 
 
-async def check_project_before_update(
+def check_project_before_update(
         obj_in_full_amount: int,
         project_invested_amount: int,
-        session: AsyncSession,
 ) -> None:
     if obj_in_full_amount < project_invested_amount:
         raise HTTPException(

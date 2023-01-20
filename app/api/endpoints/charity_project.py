@@ -67,6 +67,7 @@ async def partially_update_project(
 
     project = await check_project_exists(project_id, session)
     project = await check_project_is_closed(project_id, session)
+
     if obj_in.name is not None:
         await check_name_duplicate(obj_in.name, session)
 
@@ -74,9 +75,7 @@ async def partially_update_project(
         await charity_project_crud.update(project, obj_in, session)
         return project
 
-    await check_project_before_update(
-        obj_in.full_amount, project.invested_amount, session
-    )
+    check_project_before_update(obj_in.full_amount, project.invested_amount)
     project = await charity_project_crud.update(project, obj_in, session)
     return project
 
@@ -95,6 +94,6 @@ async def remove_project(
     Можно удалять только проекты, в которые не было внесено средств."""
 
     project = await check_project_exists(project_id, session)
-    await check_project_before_deletion(project, session)
+    check_project_before_deletion(project)
     project = await charity_project_crud.remove(project, session)
     return project
